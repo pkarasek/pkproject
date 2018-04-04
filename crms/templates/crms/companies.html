@@ -1,0 +1,38 @@
+{% extends 'crms/sections.html' %}
+{% load static %}
+
+{% block content %}
+<p class="lead"> COMPANIES </p>
+
+  <form action="{% url 'addcompany' %}">
+     <button class="btn btn-xs btn-primary" style = "margin:5px auto" type="submit">Add new company</button>
+  </form>
+  {% if companies_list %}
+  <div class="table-responsive">
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th> Company name </th>
+        <th> Contact </th>
+        
+      </tr>
+      
+    </thead>
+    <tbody>
+    {% for company in companies_list %}
+    
+    <tr>
+      <td> {{company.company_name}} </td>
+      <td> {{company.company_contact}} </td>
+    </tr>
+    
+    
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  {% else %}
+  <p>No Companies available</p>
+  {% endif %}
+ 
+{% endblock %}

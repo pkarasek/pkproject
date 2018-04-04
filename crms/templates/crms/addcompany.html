@@ -1,0 +1,18 @@
+{% extends 'crms/sections.html' %}
+{% load static %}
+
+
+{% block content %}
+<p class="lead">Add new company</p>
+  <div class = "container" style = "max-width:600px; margin:60px auto;">
+   <form class = "center" action="" method="post" >
+    {% csrf_token %}
+    <label for = "company_name">Company Name: </label>
+     <input id = "company_name" class = "form-control" type = "text" name = "company_name" value = "">
+
+    <label for = "company_contact">Company Contact: </label>
+     <input id = "company_contact" class = "form-control" type = "text" name = "company_contact" value = "">
+    <button class="btn btn-lg btn-primary" type="submit">Add Company</button>
+   </form>
+  </div>
+{% endblock %}

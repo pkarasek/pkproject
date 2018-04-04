@@ -1,5 +1,6 @@
 {% load static %}
 
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -11,31 +12,38 @@
 
     <title>LOGIN</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="{% static 'crms/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    
 
     <!-- Custom styles for this template -->
-    <link href="{% static 'crms/css/signin.css' %}" rel="stylesheet">
+    <link href="{% static 'css/signin.css' %}" rel="stylesheet">
   </head>
 
   <body class="text-center">
-    <form class="form-signin" method="post">
+{% block content %}
+    <form class="form-signin" method="post" action="{% url 'login' %}">
       {% csrf_token %}
      
       <h1 class="h3 mb-3 font-weight-normal">CRM by PKaras</h1>
+      {% if form.errors %}
+        <p> Username and Password didn't match. </p>
+      {% endif %}
       
       <label for="inputText" class="sr-only">Username</label> 
-      <input type="text" id="username" class="form-control" placeholder="Username" required autofocus>
+      {{ form.username }}
       
       <label for="inputPassword" class="sr-only">Password</label>
-      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+      {{ form.password }}
       
       
       
       
       
       <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+
       
     </form>
+{% endblock %}
   </body>
 </html>
