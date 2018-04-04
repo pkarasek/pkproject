@@ -27,7 +27,9 @@
      
       <h1 class="h3 mb-3 font-weight-normal">CRM by PKaras</h1>
       {% if form.errors %}
-        <p> Username and Password didn't match. </p>
+        <div class="alert alert-danger">
+            <p>Incorrect Username or Password!</p>
+        </div>
       {% endif %}
       
       <label for="inputText" class="sr-only">Username</label> 
