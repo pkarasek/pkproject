@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from .models import Company
-from .forms import CompanyNameForm
+from .forms import CompanyNameForm, UpdateUserForm
 
 def index(request):
     if request.user.is_authenticated:
@@ -61,4 +61,18 @@ def users(request):
     users_list = User.objects.all()
     template = loader.get_template('crms/users.html')
     context = { 'users_list':users_list }
+    return HttpResponse(template.render(context, request))
+
+@login_required(login_url='/accounts/login')
+def update(request):
+    if request.method == "POST":
+        form = UpdateUserForm(data=request.POST, instance=request.user)
+        if form.is_valid:
+            user = form.save(commit=False)
+            user.save()
+            return redirect('users')
+    else:
+        form = UpdateUserForm(instance=request.user) 
+    template = loader.get_template('crms/update.html')
+    context = { 'form':form }
     return HttpResponse(template.render(context, request))
