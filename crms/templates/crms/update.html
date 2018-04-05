@@ -3,11 +3,27 @@
 
 
 {% block content %}
-<p class="lead">Add new company</p>
+<h1>UPDATE</h1>
+<p class="lead">{{ user.username }}</p>
   <div class = "container" style = "max-width:600px; margin:60px auto;">
    <form class = "center" action="" method="post" >
     {% csrf_token %}
-    {{form.as_p}}
+    <p>
+    <label for = "username">Username: </label>
+    {{form.username}}
+    </p>
+    <p>
+    <label for = "first_name">First name: </label>
+    {{form.first_name}}
+    </p>
+    <p>
+    <label for = "last_name">Last name: </label>
+    {{form.last_name}}
+    </p>
+    <p>
+    <label for = "is_active">Can sign in: </label>
+    {{form.is_active}}
+    </p>
     <button class="btn btn-lg btn-primary" type="submit">Update user</button>
    </form>
   </div>

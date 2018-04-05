@@ -4,6 +4,7 @@ from django.http import HttpResponse
 
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 
 from .models import Company
 from .forms import CompanyNameForm, UpdateUserForm
@@ -63,16 +64,24 @@ def users(request):
     context = { 'users_list':users_list }
     return HttpResponse(template.render(context, request))
 
-@login_required(login_url='/accounts/login')
-def update(request):
-    if request.method == "POST":
-        form = UpdateUserForm(data=request.POST, instance=request.user)
-        if form.is_valid:
-            user = form.save(commit=False)
-            user.save()
-            return redirect('users')
-    else:
-        form = UpdateUserForm(instance=request.user) 
+@staff_member_required
+def update(request, target_id):
     template = loader.get_template('crms/update.html')
-    context = { 'form':form }
+    if User.objects.filter(id=target_id).exists():
+        target = User.objects.get(id=target_id)
+        
+    
+        if request.method == "POST":
+            form = UpdateUserForm(data=request.POST, instance=target)
+            if form.is_valid:
+                user = form.save(commit=False)
+                user.save()
+                return redirect('users')
+        else:
+            form = UpdateUserForm(instance=target)
+        context = { 'form':form, 'user':target }
+    else: 
+        context = {'noUser':True}
+        return redirect('users')
+    
     return HttpResponse(template.render(context, request))

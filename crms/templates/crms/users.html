@@ -4,7 +4,8 @@
 
 
 {% block content %}
-  <p class="lead"> USERS </p>
+  <h1> USERS </h1>
+  <p class="lead"> Click on username to update user (Staff only). </p>
   {% if users_list %}
   <div class="table-responsive">
   <table class="table table-condensed">
@@ -21,7 +22,7 @@
     {% for user in users_list %}
     
     <tr>
-      <td> <!--<a href="/admin/auth/user/{{user.id}}/change">-->{{user.username}}<!--</a>--> </td>
+      <td> <a href="{% url 'update' target_id=user.id %}">{{user.username}}</a> </td>
       <td> {{user.first_name}} </td>
       <td> {{user.last_name}} </td>
      <!-- <td> {{user.group.name}} </td> -->
@@ -33,7 +34,7 @@
           Inactive
         {% endif %}
       </td>
-      <td> <a href="{% url 'update' %}"> </td>
+      
 
        
     </tr>
